@@ -1,0 +1,9 @@
+/* adds spacing to anchor links to account for appbar */
+.anchor:before {
+  content: '';
+  display: block;
+  position: relative;
+  width: 0;
+  height: 80px;
+  margin-top: -80px;
+}
