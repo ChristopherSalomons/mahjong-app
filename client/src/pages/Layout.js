@@ -22,7 +22,7 @@ import Box from '@mui/material/Box';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const PageLayout = () => {
-  const [colorMode, setColorMode] = useState("dark");
+  const [colorMode, setColorMode] = useState("dark"); // dark theme <-> light theme
   const theme = useMemo(() => createTheme(getTheme(colorMode)), [colorMode]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -30,8 +30,10 @@ const PageLayout = () => {
     setDrawerOpen((prev) => !prev);
   };
 
+  // Appbar drawer object
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
+      {/* Logo */}
       <Stack direction="column" spacing={-1.5} sx={{mt: 1, mb: 0.5, mx: 'auto', width: 'fit-content'}}>
         <Typography color='appbar.text' component={RouterLink} to="/" variant="h7" sx={{ fontFamily: 'monospace', fontStyle: 'italic', textDecoration: 'none'}}>
           Riichi
@@ -41,6 +43,7 @@ const PageLayout = () => {
         </Typography>
       </Stack>
       <Divider sx={{borderColor: 'appbar.divider'}}/>
+      {/* Navigation buttons */}
       <Stack mt={1}>
         <Button component={RouterLink} to="/howtoplay" size="large" sx={{borderRadius: 0, color: 'appbar.text', ':hover': {bgcolor: 'appbar.hover'}}}>How to Play</Button>
         <Button component={RouterLink} to="/yaku" size="large" sx={{borderRadius: 0, color: 'appbar.text', ':hover': {bgcolor: 'appbar.hover'}}}>Yaku</Button>
@@ -52,11 +55,14 @@ const PageLayout = () => {
   return (
     <ThemeProvider theme={theme}>
     <CssBaseline />
+      {/* Navigation appbar */}
       <AppBar position="sticky" sx={{bgcolor: 'appbar.main'}} enableColorOnDark>
         <Toolbar>
+          {/* Open navigation drawer button */}
           <IconButton color="inherit" aria-label="open drawer" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>
             <MenuIcon />
           </IconButton>
+          {/* Logo */}
           <Stack direction="column" spacing={-1.5} sx={{ mr: 4}}>
             <Typography component={RouterLink} to="/" variant="h7" sx={{ fontFamily: 'monospace', fontStyle: 'italic', textDecoration: 'none', color: 'appbar.text'}}>
               Riichi
@@ -65,22 +71,26 @@ const PageLayout = () => {
               MAHJONG
             </Typography>
           </Stack>
+          {/* Navigation buttons */}
           <Stack direction="row" spacing={1.25} divider={<Divider orientation="vertical" flexItem sx={{borderColor: 'appbar.divider'}}/>}>
             <Button component={RouterLink} to="/howtoplay" sx={{display: {xs: 'none', sm: 'inherit'}, color: 'appbar.text', ':hover': {bgcolor: 'appbar.hover'}}}>How to Play</Button>
             <Button component={RouterLink} to="/yaku" sx={{display: {xs: 'none', sm: 'inherit'}, color: 'appbar.text', ':hover': {bgcolor: 'appbar.hover'}}}>Yaku</Button>
             <Button component={RouterLink} to="/strategy" sx={{display: {xs: 'none', sm: 'inherit'}, color: 'appbar.text', ':hover': {bgcolor: 'appbar.hover'}}}>Strategy</Button>
           </Stack>
+          {/* Dark theme <-> light theme button */}
           <IconButton onClick={() => setColorMode(colorMode === "light" ? "dark" : "light")} aria-label="theme toggle" sx={{ml: 'auto', color: 'appbar.text', ':hover': {bgcolor: 'appbar.hover'}}}>
               {colorMode === 'dark' ? <WbSunnyOutlinedIcon fontSize="small"/> : <DarkModeOutlinedIcon fontSize="small"/>}
           </IconButton>
         </Toolbar>
       </AppBar>
+
+      {/* Navigation drawer */}
       <Box component="nav">
         <Drawer
           open={drawerOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true, // better open performance on mobile
           }}
           PaperProps={{sx: {bgcolor: 'appbar.main'}}}
           sx={{display: { xs: 'block', sm: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '200px' }}}

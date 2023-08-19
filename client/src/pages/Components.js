@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
+// Get screen size
 export const ScreenSize = () => {
   const theme = useTheme();
   const isXLarge = useMediaQuery(theme.breakpoints.only('xl'));
@@ -24,6 +25,16 @@ export const ScreenSize = () => {
   }
 }
 
+// Parse custom tile regex and return tile image object
+// "1p"   ->  1pin
+// "234s" ->  2sou, 3sou, 4sou
+// "E"    ->  east wind
+// "R"    ->  red dragon
+// "T-"   ->  white dragon (tofu) turned 90 degrees
+// "S="   ->  south winds turned & double stacked
+// "X"    ->  hidden tile
+// "?"    ->  unknown tile
+// "  "   ->  empty space
 export const Tiles = (tileIDs, size=2) => {
   let tiles = [];
   let orientation = 0;
@@ -35,10 +46,8 @@ export const Tiles = (tileIDs, size=2) => {
   } else if (size === 1) {
     dimensions = ['36px', '48px', '29px', '72px', '17px'];
   }
-  // } else if (size === 'lg') {
-  //   dimensions = ['54px', '72px', '43px', '108px', '26px'];
-  // }
 
+  // Parse string in reverse to determine correct tile
   for (let i = tileIDs.length - 1; i >= 0; --i) {
     if (/[0-9]/.test(tileIDs[i])) {
       tiles.push(MakeNumberTile(tileIDs[i], suit, orientation, dimensions));
@@ -62,6 +71,7 @@ export const Tiles = (tileIDs, size=2) => {
     }
   }
 
+  // Return tile object
   return (
     <Stack direction="row" spacing={'1px'} alignItems="flex-end">
       {tiles.reverse()}
@@ -69,6 +79,7 @@ export const Tiles = (tileIDs, size=2) => {
   )
 };
 
+// Make tiles
 const MakeNumberTile = (value, suit, orientation, dimensions) => {
   if (orientation === 0) {
     return (
@@ -101,7 +112,6 @@ const MakeNumberTile = (value, suit, orientation, dimensions) => {
     </Box>
   )
 }
-
 const MakeHonorTile = (value, orientation, dimensions) => {
   if (orientation === 0) {
     return (
@@ -135,13 +145,11 @@ const MakeHonorTile = (value, orientation, dimensions) => {
     </Box>
   )
 }
-
 const MakeSpace = (dimensions) => {
   return (
     <Box sx={{width: dimensions[4], height: dimensions[1], position: 'relative'}} />
   )
 }
-
 const MakeHiddenTile = (dimensions) => {
   return (
     <Box sx={{width: dimensions[0], height: dimensions[1], position: 'relative'}}>
@@ -150,6 +158,7 @@ const MakeHiddenTile = (dimensions) => {
   )
 }
 
+// Object to lookup image file path
 const TileLookup = {
   'front': {
     src: "/tiles/png/regular/front.png",

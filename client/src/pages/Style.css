@@ -1,4 +1,4 @@
-/* adds spacing to anchor links to account for appbar */
+/* Adds spacing to anchor links to account for appbar */
 .anchor:before {
   content: '';
   display: block;

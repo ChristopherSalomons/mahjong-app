@@ -1,6 +1,6 @@
-# Mahjong App
+# Riichi Mahjong App
 
-Web application meant to teach the game riichi mahjong.
+Web application intended to teach the game riichi mahjong.
 
 Created using [React](https://github.com/facebook/create-react-app), [Material UI](https://github.com/mui/material-ui), [Node.js](https://github.com/nodejs/node), and [Express](https://github.com/expressjs/express).
 

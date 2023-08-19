@@ -25,6 +25,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 
+// Table of contents button and popup menu
 const ContentMenu = ({toggleContentList}) => {
   const [contentMenuIsOpen, setContentMenuIsOpen] = useState(false);
   const contentMenuAnchorRef = useRef(null);
@@ -57,7 +58,7 @@ const ContentMenu = ({toggleContentList}) => {
     }
   }
   
-  // return focus to the button when we transition from !open -> open
+  // Return focus to button when we transition from !open -> open
   const prevContentMenuIsOpen = useRef(contentMenuIsOpen);
   useEffect(() => {
     if (prevContentMenuIsOpen.current === true && contentMenuIsOpen === false) {
@@ -69,6 +70,7 @@ const ContentMenu = ({toggleContentList}) => {
 
   return (
     <>
+      {/* Open content menu button */}
       <IconButton
         aria-label="contents"
         onClick={handleContentButtonToggle}
@@ -90,7 +92,8 @@ const ContentMenu = ({toggleContentList}) => {
       >
         <ListIcon/>
       </IconButton>
-      {/* <Box sx={{position: 'fixed', top: {xs: '65px', sm: '75px'}, left: '10px', width: '40px', height: '40px', borderRadius: '50%', zIndex: 1, bgcolor: 'appbar.main'}}></Box>  */}
+
+      {/* Content menu */}
       <Popper
         open={contentMenuIsOpen}
         anchorEl={contentMenuAnchorRef.current}
@@ -129,6 +132,8 @@ const ContentMenu = ({toggleContentList}) => {
                 <ListItem
                   sx={{fontWeight: 600, borderBottom: 1, borderColor: 'appbar.divider', paddingY: '6px'}}
                   secondaryAction={ ScreenSize() >= 3 &&
+
+                    // Return content list to sidebar button
                     <IconButton
                       aria-label="move to sidebar"
                       onClick={handleMoveToSidebar}
@@ -164,12 +169,15 @@ const ContentMenu = ({toggleContentList}) => {
   )
 }
 
+// Table of contents
 const ContentList = ({toggleContentList}) => {
   return (
     <Box mt={15.7} sx={{position: 'sticky', top: '80px', width: '250px'}}>
       <List dense>
         <ListItem
           secondaryAction={
+
+            // Hide list of contents button
             <IconButton
               aria-label="hide list of contents"
               onClick={toggleContentList}
@@ -227,11 +235,13 @@ const ContentList = ({toggleContentList}) => {
   )
 }
 
+// Main page content
 const PageContent = ({openFullscreenImg}) => {
   return (
     <Container maxWidth='md'>
       <Typography variant="h4" mt={6}>A Beginner's Guide to Riichi Mahjong</Typography>
 
+      {/* Tiles */}
       <Typography id='tiles' className='anchor' variant="h5" mt={5} mb={0.5}>Tiles</Typography>
       <Divider/>
       <Typography paragraph mt={1.5}>Mahjong is played with tiles that function similar to a deck of cards. <Box component="span" fontWeight='bold'>Number</Box> tiles have values from 1 to 9 and come in three different suits:</Typography>
@@ -248,11 +258,13 @@ const PageContent = ({openFullscreenImg}) => {
       {Tiles('T   G   R')}
       <Typography mt={4} paragraph>There are four identical copies of each tile, for a total of 136 tiles.</Typography>
 
+      {/* Basic gameplay */}
       <Typography id='gameplay' className='anchor' variant="h5" mb={0.5} mt={4} >Basic Gameplay</Typography>
       <Divider/>
       <Box component="img" src="/screenshots/game_start.gif" onClick={() => {openFullscreenImg("/screenshots/game_start.gif")}} mt={2} sx={{width: "100%", cursor: 'pointer'}}/>
       <Typography paragraph mt={1.5}>A regular game of Mahjong has four players. With a starting hand of 13 tiles, players take turns counter-clockwise around the table. Each turn, the player draws a tile, then discards a tile of their choice from their hand. The first person to collect a "winning" hand of tiles wins points from the other players, based on the rarity of the hand.</Typography>
       
+      {/* Groups and pairs */}
       <Typography id='groups' className='anchor' variant="h5" mb={0.5} mt={4}>Groups and Pairs</Typography>
       <Divider/>
       <Typography paragraph mt={1.5}>A valid winning hand must consist of four <Box component="span" fontWeight='bold'>groups</Box> and one <Box component="span" fontWeight='bold'>pair</Box>. There are two types of groups:</Typography>
@@ -269,6 +281,7 @@ const PageContent = ({openFullscreenImg}) => {
       </Box>
       <Typography mt={2}>The winning tile is displayed seperate from the rest. This is because a full hand consists of only 13 tiles, but 14 tiles are needed to win.</Typography>
       
+      {/* Calls */}
       <Typography id='calls' className='anchor' variant="h5" mb={0.5} mt={4}>Calls</Typography>
       <Divider/>
       <Typography paragraph mt={1}>Whenever a player discards a tile, you may be able to <Box component="span" fontWeight='bold'>call</Box> it for yourself. This can only be done if you can use the tile to complete a group.</Typography>
@@ -284,6 +297,7 @@ const PageContent = ({openFullscreenImg}) => {
       <Typography paragraph><Box component="span" fontWeight='bold'>1. Tsumo:</Box> Win using your own drawn tile. Points are collected from all other players, split evenly between them.</Typography>
       <Typography paragraph><Box component="span" fontWeight='bold'>2. Ron:</Box> Win using a player's discarded tile. Points are collected from that player alone.</Typography>
 
+      {/* Yaku */}
       <Typography id='yaku' className='anchor' variant="h5" mb={0.5} mt={4}>Yaku</Typography>
       <Divider/>
       <Typography paragraph mt={1.5}>There is one final condition for a winning hand to be valid: it must meet the requirements of at least one <Box component="span" fontWeight='bold'>yaku</Box>. Yaku are specific combinations of tiles or special conditions that make a hand more rare and valuable. There are more than 40 yaku in total, but don't worry — to succeed as a beginner, you only need to remember three of them:</Typography>
@@ -306,6 +320,7 @@ const PageContent = ({openFullscreenImg}) => {
         {Tiles('234m222678p5678 5s', ScreenSize())}
       </Box>
 
+      {/* Furiten */}
       <Typography id='furiten' className='anchor' variant="h5" mb={0.5} mt={4}>Furiten</Typography>
       <Divider/>
       <Typography paragraph mt={1.5}>After reaching tenpai, the tiles you can use to win are called your <Box component="span" fontWeight='bold'>waits</Box>.</Typography>
@@ -329,6 +344,7 @@ const HowToPlayPage = () => {
 
   return (
     <>
+      {/* Fullscreen image */}
       <Dialog open={imgFullscreen} onClose={closeImg} maxWidth='xl' PaperComponent={Box} PaperProps={{sx: {margin: '0px', maxHeight: '100vh'}}}>
         <Box component="img" src={imgFullscreen} sx={{maxWidth: '100%', maxHeight: '100vh'}}/>
         <Box sx={{position: 'absolute', top: '0px', width: "100%"}}>
@@ -341,11 +357,15 @@ const HowToPlayPage = () => {
           </IconButton>
         </Box>
       </Dialog>
+
+      {/* Contents button and popup menu */}
       {(ScreenSize() < 3 || !contentListIsOpen) &&
         <ContentMenu toggleContentList={toggleContentList}/>
       }
+
       <Container maxWidth='xl' id='top' className='anchor'>
         {(ScreenSize() >= 3 && contentListIsOpen) ?
+          // Content list and content
           <Grid container spacing={4} wrap="nowrap" disableEqualOverflow>
             <Grid xs="auto" display={contentListIsOpen ? {xs: 'none', lg: 'block'} : 'none'}>
               <ContentList toggleContentList={toggleContentList}/>
@@ -355,6 +375,7 @@ const HowToPlayPage = () => {
             </Grid>
           </Grid>
           :
+          // Content only
           <PageContent openFullscreenImg={openImg}/>
         }   
       </Container>
